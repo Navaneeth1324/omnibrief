@@ -11,7 +11,7 @@
 
 **OmniBrief** is an autonomous intelligence agent that conducts deep, multi-step research across live web sources and user-uploaded reference documents, streaming its real-time reasoning trace directly to a glassmorphic dashboard before synthesizing publication-ready executive briefings with verified citations.
 
-[Features](#-key-features) • [Architecture](#-architecture) • [Quickstart](#-quickstart) • [LinkedIn Demo Tips](#-how-to-present-on-linkedin)
+[Features](#-key-features) • [Architecture](#-architecture) • [Quickstart](#-quickstart) • [License](#-license)
 
 </div>
 
@@ -95,20 +95,6 @@ Open **`http://localhost:8000`** in your browser.
    ```bash
    pytest -v tests/
    ```
-
----
-
-## 📱 How to Present on LinkedIn
-
-A high-performing LinkedIn post for this project follows this proven formula:
-
-1. **The Hook:** *"I got tired of spending 3 hours skimming 20 tabs to research emerging tech trends—so I built OmniBrief, an autonomous multimodal research agent."*
-2. **The 45s Screen Recording:**
-   - Record entering a prompt like: *"Future of solid-state batteries in EV aviation 2026"* with a sample PDF.
-   - Show the live **Execution Trace** streaming: `[PLANNING] -> [SEARCHING] -> [READING] -> [SYNTHESIZING]`.
-   - Scroll down to reveal the executive briefing with tables and citations.
-3. **The Architecture Snapshot:** Include the Mermaid diagram image above.
-4. **Call to Action:** Link to the GitHub repo in the first comment!
 
 ---
 
