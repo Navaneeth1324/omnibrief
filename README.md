@@ -31,19 +31,20 @@
 
 ```mermaid
 flowchart LR
-    A[User Request + PDF] --> B[FastAPI SSE Server]
-    B --> C[Agent Orchestrator]
+    A["User Prompt & PDF"] --> B["FastAPI SSE Server"]
+    B --> C["Agent Orchestrator"]
     
-    subgraph Execution Loop
-        C --> D[1. Query Planning]
-        C --> E[2. Web Search Tool]
-        C --> F[3. Deep Scraping]
-        C --> G[4. Multimodal PDF Parser]
+    subgraph Execution_Loop ["Execution Loop"]
+        D["1. Query Planning"]
+        E["2. Web Search Tool"]
+        F["3. Deep Scraping"]
+        G["4. Multimodal PDF Parser"]
     end
-    
-    Execution Loop --> H[Gemini 2.5 Flash / Pro]
-    H --> I[Verified Briefing Engine]
-    I -->|Real-time Stream| J[Glassmorphic UI / Dashboard]
+
+    C --> Execution_Loop
+    Execution_Loop --> H["Gemini 2.5 Flash / Pro"]
+    H --> I["Verified Briefing Engine"]
+    I -->|Real-time Stream| J["Glassmorphic UI / Dashboard"]
 ```
 
 ---
