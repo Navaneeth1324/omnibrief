@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OmniBrief — Autonomous Research Agent</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Marked for markdown parsing -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col font-sans antialiased selection:bg-indigo-500 selection:text-white">
+
+  <!-- Top Navbar -->
+  <header class="border-b border-slate-800 bg-slate-900/60 backdrop-blur sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-500 to-purple-600 flex items-center justify-center shadow-lg shadow-indigo-500/20">
+          <i class="fa-solid fa-brain text-white text-lg"></i>
+        </div>
+        <div>
+          <h1 class="text-lg font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-indigo-200 via-white to-slate-300">
+            OmniBrief
+          </h1>
+          <p class="text-xs text-slate-400">Autonomous Multimodal Research Agent</p>
+        </div>
+      </div>
+      <div class="flex items-center space-x-3">
+        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-emerald-950 text-emerald-400 border border-emerald-800/60">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+          Agent Online
+        </span>
+        <a href="https://github.com" target="_blank" class="text-slate-400 hover:text-white text-sm transition">
+          <i class="fa-brands fa-github text-xl"></i>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Grid -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 grid grid-cols-1 lg:grid-cols-12 gap-8">
+    
+    <!-- Left Column: Controls & Agent Live Thought Stream -->
+    <div class="lg:col-span-5 flex flex-col space-y-6">
+      
+      <!-- Input Card -->
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl relative overflow-hidden">
+        <div class="absolute -right-10 -top-10 w-40 h-40 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
+        <h2 class="text-base font-semibold text-slate-200 mb-4 flex items-center gap-2">
+          <i class="fa-solid fa-compass text-indigo-400"></i> Research Directive
+        </h2>
+
+        <form id="researchForm" class="space-y-4">
+          <div>
+            <label class="block text-xs font-medium text-slate-400 mb-1.5">Topic / Question</label>
+            <input 
+              type="text" 
+              id="topicInput" 
+              required
+              placeholder="e.g. Future of humanoid robotics in industrial manufacturing 2026"
+              class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition"
+            >
+          </div>
+
+          <div>
+            <label class="block text-xs font-medium text-slate-400 mb-1.5">Specific Focus or Notes (Optional)</label>
+            <textarea 
+              id="notesInput" 
+              rows="2"
+              placeholder="e.g. Focus on battery efficiency, actuator designs, and production costs..."
+              class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2 text-sm text-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition resize-none"
+            ></textarea>
+          </div>
+
+          <div>
+            <label class="block text-xs font-medium text-slate-400 mb-1.5">Reference Document / PDF (Optional)</label>
+            <div class="border border-dashed border-slate-800 rounded-xl p-3 text-center bg-slate-950/50 hover:bg-slate-950 transition cursor-pointer relative" id="dropArea">
+              <input type="file" id="fileInput" accept=".pdf" class="absolute inset-0 opacity-0 cursor-pointer">
+              <i class="fa-solid fa-file-pdf text-slate-500 text-lg mb-1"></i>
+              <p id="fileLabel" class="text-xs text-slate-400">Drop PDF here or click to browse</p>
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-medium text-slate-400 mb-1.5">Gemini API Key (Optional)</label>
+            <input 
+              type="password" 
+              id="apiKeyInput" 
+              placeholder="AIzaSy... (Uses server key if empty)"
+              class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition"
+            >
+          </div>
+
+          <button 
+            type="submit" 
+            id="startBtn"
+            class="w-full py-3 px-4 rounded-xl font-medium text-sm text-white bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 shadow-lg shadow-indigo-500/25 transition active:scale-[0.99] flex items-center justify-center gap-2"
+          >
+            <i class="fa-solid fa-bolt"></i>
+            <span>Launch Autonomous Agent</span>
+          </button>
+        </form>
+      </div>
+
+      <!-- Agent Thought & Execution Stream Card -->
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl flex-1 flex flex-col min-h-[300px]">
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="text-base font-semibold text-slate-200 flex items-center gap-2">
+            <i class="fa-solid fa-microchip text-purple-400"></i> Execution Trace
+          </h2>
+          <span id="agentStatusBadge" class="text-xs px-2.5 py-0.5 rounded-full bg-slate-800 text-slate-400 border border-slate-700">
+            Idle
+          </span>
+        </div>
+
+        <div id="logsContainer" class="flex-1 space-y-2 overflow-y-auto max-h-[360px] pr-2 text-xs font-mono text-slate-300 scrollbar-thin">
+          <div class="text-slate-500 italic p-3 border border-slate-800/60 rounded-lg bg-slate-950/40">
+            Agent standby. Configure a directive and launch to observe live reasoning steps, tool calling, and source synthesis.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Column: Final Executive Briefing & Export -->
+    <div class="lg:col-span-7 flex flex-col">
+      <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-xl flex-1 flex flex-col min-h-[600px]">
+        
+        <!-- Header & Action Buttons -->
+        <div class="flex flex-wrap items-center justify-between pb-4 border-b border-slate-800 gap-3">
+          <div>
+            <h2 class="text-lg font-bold text-slate-100 flex items-center gap-2">
+              <i class="fa-solid fa-file-contract text-indigo-400"></i> Executive Briefing
+            </h2>
+            <p class="text-xs text-slate-400" id="reportMeta">No briefing generated yet</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <button 
+              id="copyBtn" 
+              class="hidden px-3 py-1.5 rounded-lg border border-slate-700 bg-slate-800 hover:bg-slate-700 text-xs text-slate-200 transition items-center gap-1.5"
+            >
+              <i class="fa-solid fa-copy"></i> Copy Markdown
+            </button>
+            <button 
+              id="printBtn" 
+              onclick="window.print()" 
+              class="hidden px-3 py-1.5 rounded-lg border border-indigo-500/30 bg-indigo-500/10 hover:bg-indigo-500/20 text-xs text-indigo-300 transition items-center gap-1.5"
+            >
+              <i class="fa-solid fa-print"></i> Export / PDF
+            </button>
+          </div>
+        </div>
+
+        <!-- Rendered Report Container -->
+        <div id="reportContent" class="flex-1 mt-6 prose prose-invert prose-indigo max-w-none text-slate-200 text-sm overflow-y-auto max-h-[650px] pr-2">
+          <div class="h-full flex flex-col items-center justify-center text-center p-8 text-slate-500">
+            <i class="fa-regular fa-newspaper text-5xl mb-4 text-slate-700"></i>
+            <p class="text-base font-medium text-slate-400">No Intelligence Briefing Ready</p>
+            <p class="text-xs max-w-md mt-1">Enter a topic on the left to activate the web search pipeline, multimodal document parsing, and Gemini synthesis engine.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
