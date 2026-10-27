@@ -53,7 +53,7 @@ flowchart LR
 ### Option 1: Docker (Recommended)
 
 ```bash
-git clone https://github.com/yourusername/omnibrief.git
+git clone https://github.com/Navaneeth1324/omnibrief.git
 cd omnibrief
 
 # Copy env and add your GEMINI_API_KEY
@@ -70,7 +70,7 @@ Open **`http://localhost:8000`** in your browser.
 
 1. **Clone & Virtual Environment:**
    ```bash
-   git clone https://github.com/yourusername/omnibrief.git
+   git clone https://github.com/Navaneeth1324/omnibrief.git
    cd omnibrief
    python3 -m venv .venv
    source .venv/bin/activate
